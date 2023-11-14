@@ -1,1 +1,6 @@
 Aboba
+git init
+git status
+git add .
+git commit -m "may be comment"
+git push -u origin master
