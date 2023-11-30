@@ -9,6 +9,21 @@ use Illuminate\Support\Str;
 class NoteController extends Controller
 {
     //
+    public function showDashboard(Request $request)
+    {
+        $user = auth()->user();
+        $sort = $request->get('sort', 'created_at');
+        $direction = $request->get('direction', 'asc');
+
+        // Вам нужно изменить $notes на выборку заметок для текущего пользователя
+        $notes = Note::where('user_id', $user->id)
+            ->orderBy($sort, $direction)
+            ->get();
+
+        // Возвращаем представление dashboard.blade.php
+        return view('notes.partials.dashboard',['notes'=>$notes]);
+    }
+
     public function share(Note $note)
     {
         $sharedNote = new SharedNote();

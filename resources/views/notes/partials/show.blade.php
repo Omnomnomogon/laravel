@@ -7,26 +7,30 @@
         <p><strong>Content:</strong></p>
         <p>{!! $note->content !!}</p>
 
-        <a href="{{ route('notes.edit', $note->id) }}" class="btn btn-primary">Edit Note</a>
+        <div class="mt-3">
+            <a href="{{ route('notes.edit', $note->id) }}" class="btn btn-primary me-2">Edit Note</a>
 
-        <form action="{{ route('notes.destroy',$note->id) }}" method="POST">
-            {{ csrf_field() }}
-            {{ method_field('DELETE') }}
+            <form action="{{ route('notes.destroy',$note->id) }}" method="POST" class="me-2">
+                {{ csrf_field() }}
+                {{ method_field('DELETE') }}
 
-            <button class="btn btn-danger">
-                {{ __('Delete Note') }}
-            </button>
-        </form>
+                <button class="btn btn-danger">
+                    {{ __('Delete Note') }}
+                </button>
+            </form>
 
-        <a href="{{ route('notes.index') }}" class="btn btn-primary">Back to Notes</a>
+            <a href="{{ route('notes.index') }}" class="btn btn-primary me-2">Back to Notes</a>
 
-        <!-- Добавляем кнопку Share -->
-        <form action="{{ route('notes.share', $note->id) }}" method="POST">
-            {{ csrf_field() }}
-            <button class="btn btn-success">
-                {{ __('Share Note') }}
-            </button>
-        </form>
+            <!-- Добавляем кнопку Share -->
+            @if(auth()->user()->is_premium)
+                <form action="{{ route('notes.share', $note->id) }}" method="POST">
+                    {{ csrf_field() }}
+                    <button class="btn btn-success">
+                        {{ __('Share Note') }}
+                    </button>
+                </form>
+            @endif
+        </div>
     </div>
 @endsection
 

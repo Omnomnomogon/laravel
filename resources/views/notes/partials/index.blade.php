@@ -25,7 +25,21 @@
             <ul class="list-group mt-3">
                 @foreach ($notes as $note)
                     <li class="list-group-item">
-                        <a href="{{ route('notes.show', $note->id) }}">{{ $note->title }}</a>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <a href="{{ route('notes.show', $note->id) }}" style="text-decoration: none; color: black; font-size: 18px;">{{ $note->title }}</a>
+                                <p>Created: {{ $note->created_at->format('Y-m-d') }}</p>
+                                <p>Last Updated: {{ $note->updated_at->format('Y-m-d') }}</p>
+                            </div>
+                            <div>
+                                <a href="{{ route('notes.edit', $note->id) }}" class="btn btn-primary mr-2">Edit</a>
+                                <form action="{{ route('notes.destroy', $note->id) }}" method="POST" style="display: inline-block;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </div>
+                        </div>
                     </li>
                 @endforeach
             </ul>
@@ -38,9 +52,9 @@
 @section('scripts')
     <script>
         ClassicEditor
-            .create( document.querySelector( '#note-textarea' ) )
-            .catch( error => {
-                console.error( error );
-            } );
+            .create(document.querySelector('#note-textarea'))
+            .catch(error => {
+                console.error(error);
+            });
     </script>
 @endsection

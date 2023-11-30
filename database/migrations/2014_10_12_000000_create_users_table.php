@@ -18,8 +18,13 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+
             $table->rememberToken();
             $table->timestamps();
+        });
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->boolean('is_premium')->default(false); // Добавление столбца is_premium
         });
     }
 
@@ -29,5 +34,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('users');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('is_premium'); // Удаление столбца is_premium при откате миграции
+        });
     }
 };

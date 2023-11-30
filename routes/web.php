@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\NoteController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Task;
 use App\Models\Note;
@@ -26,8 +27,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/notes/{note}/edit', [NoteController::class,'edit'])->name('notes.edit');
     Route::put('/notes/{note}', [NoteController::class,'update'])->name('notes.update');
     Route::delete('/notes/{note}', [NoteController::class,'destroy'])->name('notes.destroy');
+
     Route::post('/notes/{note}/share', [NoteController::class, 'share'])->name('notes.share');
     Route::get('/notes/shared/{url}', [NoteController::class, 'shared'])->name('notes.shared');
+    Route::get('/dashboard1', [NoteController::class, 'showDashboard'])->name('notes.dashboard');
 });
 
 
@@ -82,6 +85,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::post('/switch-to-premium', [UserController::class, 'switchToPremium'])->name('switchToPremium');
+    Route::post('/switch-to-regular', [UserController::class, 'switchToRegular'])->name('switchToRegular');
+
 });
 
 
